@@ -2,7 +2,17 @@ package Project;
 
 
 import org.bytedeco.javacpp.opencv_objdetect.CvHaarClassifierCascade;
+
+// Opencv imports
+
 import static org.bytedeco.javacpp.opencv_core.cvLoad;
+import static org.bytedeco.javacpp.opencv_imgcodecs.cvLoadImage;
+import static org.bytedeco.javacpp.opencv_core.IPL_DEPTH_8U;
+import static org.bytedeco.javacpp.opencv_imgproc.COLOR_BGR2GRAY;
+import static org.bytedeco.javacpp.opencv_imgproc.cvCvtColor;
+import org.bytedeco.javacpp.Loader;
+import org.bytedeco.javacpp.opencv_core.IplImage;
+import org.bytedeco.javacpp.opencv_core.Mat;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,14 +22,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.bytedeco.javacpp.Loader;
 
 public class FaceDetector {
 	
 	static private  CvHaarClassifierCascade classifier;
 	static private String cascadePath = "/tmp/frontal_casecade.xml";
-	//static private String cascadePath = "./frontal_casecade.xml";
-	
+
 	
 	
 	
@@ -43,6 +51,7 @@ public class FaceDetector {
 		
 		
 	}
+	
 	
 	static private boolean loadClassifier() {
 		
@@ -94,6 +103,18 @@ public class FaceDetector {
         return cascadeDownload;
         
 	}
+	
+	static IplImage getGrayImageOf(IplImage image) {
+		
+		IplImage grayImage = IplImage.create(image.width(), image.height(), IPL_DEPTH_8U , 1);
+		cvCvtColor(image , grayImage , COLOR_BGR2GRAY);
+		
+		
+		
+		return grayImage;
+		
+	}
+	
 	
 	private static boolean saveCascadeFile(URL url) {
 		
@@ -147,10 +168,39 @@ public class FaceDetector {
 		return count;
 	}
 	
+	static IplImage loadImage(String imageName) {
+		
+		File imageFile = new File(imageName);
+		
+		if(!imageFile.exists()) {
+			System.out.println("Image file does not exists!!");
+			return null;
+		}
+		
+		IplImage image = null;
+		try {
+			image = cvLoadImage(imageFile.getAbsolutePath());
+			
+		}catch(NullPointerException e) {
+			
+			System.out.println("Could not load " + imageName);;
+		}
+		
+		System.out.println("Image loaded successfully.");
+		
+		return image;
+		
+		
+	}
+	
 	public static void main(String[] argv) {
 		
-		System.out.println("test");
-		int count =  FaceDetector.getFaceCount();
+		
+		
+		IplImage image = FaceDetector.loadImage("/home/musa/test.jpg");
+		
+		if(image != null)
+			image.close();
 		
 	}
 
