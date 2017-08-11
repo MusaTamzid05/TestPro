@@ -9,10 +9,15 @@ import static org.bytedeco.javacpp.opencv_core.cvLoad;
 import static org.bytedeco.javacpp.opencv_imgcodecs.cvLoadImage;
 import static org.bytedeco.javacpp.opencv_core.IPL_DEPTH_8U;
 import static org.bytedeco.javacpp.opencv_imgproc.COLOR_BGR2GRAY;
+import static org.bytedeco.javacpp.opencv_objdetect.CV_HAAR_FIND_BIGGEST_OBJECT;
+import static org.bytedeco.javacpp.opencv_objdetect.CV_HAAR_DO_ROUGH_SEARCH;
+import static org.bytedeco.javacpp.helper.opencv_objdetect.cvHaarDetectObjects;
 import static org.bytedeco.javacpp.opencv_imgproc.cvCvtColor;
 import org.bytedeco.javacpp.Loader;
+import org.bytedeco.javacpp.opencv_core.CvMemStorage;
+import org.bytedeco.javacpp.opencv_core.CvSeq;
 import org.bytedeco.javacpp.opencv_core.IplImage;
-import org.bytedeco.javacpp.opencv_core.Mat;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -115,6 +120,23 @@ public class FaceDetector {
 		
 	}
 	
+	public static CvSeq getFaces(IplImage image) {
+		
+		if(image == null) {
+			System.out.println("Cannot get image from a null!!");
+			return null;
+		}
+		
+		IplImage grayImage = FaceDetector.getGrayImageOf(image);
+		CvMemStorage storage = CvMemStorage.create();
+		
+		CvSeq faces = cvHaarDetectObjects(grayImage , classifier , storage , 1.1 , 3 , CV_HAAR_FIND_BIGGEST_OBJECT | CV_HAAR_DO_ROUGH_SEARCH);
+		
+		
+		return faces;
+		
+	}
+	
 	
 	private static boolean saveCascadeFile(URL url) {
 		
@@ -151,7 +173,7 @@ public class FaceDetector {
 		return fileSaved;
 	}
 	
-	public static int getFaceCount() {
+	public static int getFaceCount(String imagePath) {
 		int count = 0;
 		
 		if(classifier == null)
@@ -160,10 +182,19 @@ public class FaceDetector {
 				return count;
 			}
 		
-		
-		
-		
 		System.out.println("Cacade loaded.");
+		
+		IplImage image = FaceDetector.loadImage(imagePath);
+		
+		if(image == null)
+			return count;
+		
+		
+		CvSeq faces = FaceDetector.getFaces(image);
+		
+		count = faces.total();
+		
+		
 		
 		return count;
 	}
@@ -196,12 +227,9 @@ public class FaceDetector {
 	public static void main(String[] argv) {
 		
 		
+		int count = FaceDetector.getFaceCount("/home/musa/test2.jpg");
 		
-		IplImage image = FaceDetector.loadImage("/home/musa/test.jpg");
-		
-		if(image != null)
-			image.close();
-		
+		System.out.println("total face count " + count);
 	}
 
 }
