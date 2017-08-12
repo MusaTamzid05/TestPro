@@ -1,4 +1,4 @@
-package Project;
+package project;
 
 
 import org.bytedeco.javacpp.opencv_objdetect.CvHaarClassifierCascade;
@@ -227,7 +227,7 @@ public class FaceDetector {
 	public static void main(String[] argv) {
 		
 		
-		int count = FaceDetector.getFaceCount("/home/musa/test2.jpg");
+		int count = FaceDetector.getFaceCount("/home/musa/test6.jpg");
 		
 		System.out.println("total face count " + count);
 	}

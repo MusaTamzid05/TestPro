@@ -19,5 +19,6 @@
 	<classpathentry kind="lib" path="/home/musa/javacv-bin/opencv-linux-x86_64.jar"/>
 	<classpathentry kind="lib" path="/home/musa/javacv-bin/videoinput.jar"/>
 	<classpathentry kind="lib" path="/home/musa/javacv-bin/videoinput-platform.jar"/>
+	<classpathentry kind="lib" path="libs/mysql-connector-java-5.1.21-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
