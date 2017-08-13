@@ -43,7 +43,8 @@ public class DataBaseConnector {
 			if(openConnection()) {
 				System.out.println("Database is connected.");
 				
-			}
+			}else
+				System.out.println("Failed to connect to the database.");
 				
 			
 		}
@@ -54,8 +55,11 @@ public class DataBaseConnector {
 	
 	public void closeConnection() {
 		
-		System.out.println("Closing the connection.");
 		
+		if(conn == null)
+			return;
+	
+		System.out.println("Closing the connection.");
 		try {
 			conn.close();
 			conn = null;

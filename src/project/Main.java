@@ -83,7 +83,7 @@ public class Main {
 	
 	public static void main(String[] argv) {
 		
-		//testConnection();
+		testConnection();
 		//testClassifier();
 	    //testDataBase();
 		

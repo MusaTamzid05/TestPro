@@ -18,3 +18,11 @@ INSERT INTO `admin` (`id`, `userName`, `password`) VALUES
 
 -- --------------------------------------------------------
 
+
+
+CREATE TABLE IF NOT EXISTS `university_links` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `link` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) AUTO_INCREMENT=2 ;
