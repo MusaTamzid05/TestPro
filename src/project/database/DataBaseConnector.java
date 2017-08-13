@@ -42,13 +42,13 @@ public class DataBaseConnector {
 		if(conn == null) {
 			if(openConnection()) {
 				System.out.println("Database is connected.");
-				return conn;
+				
 			}
 				
 			
 		}
 			
-		return null;
+		return conn;
 		
 	}
 	
