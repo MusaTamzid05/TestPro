@@ -1,7 +1,10 @@
 package project;
 
+import java.util.ArrayList;
+
 import project.database.*;
 import project.database.manager.AdminManager;
+import project.database.manager.UniversityLinkManager;
 import project.database.tables.Admin;
 
 
@@ -19,6 +22,21 @@ public class Main {
 		DataBaseConnector.getInstance().getConnection();
 		DataBaseConnector.getInstance().closeConnection();
 		
+	}
+	
+	public static void testFindUniversityLink() {
+		
+		String link  = UniversityLinkManager.getUniversityLink("University of Dhaka");
+		
+		if(link == null)
+			System.out.println("link now found.");
+		else
+			System.out.println(link);
+		
+		ArrayList<String> names = UniversityLinkManager. getUniversityNames();
+		
+		for(String name : names)
+			System.out.println(name);
 	}
 	
 	public static void testDataBase() {
@@ -83,9 +101,11 @@ public class Main {
 	
 	public static void main(String[] argv) {
 		
-		testConnection();
+		//testConnection();
 		//testClassifier();
 	    //testDataBase();
+		
+		testFindUniversityLink();
 		
 	}
 	
