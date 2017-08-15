@@ -34,6 +34,53 @@ public class AdminManager extends QueryManager {
 		
 	}
 	
+	public static boolean isLoggedInSucessfull(String userName , String password) {
+		
+		
+		
+		boolean loggedIn = false;
+		
+		String sql = "SELECT * from admin WHERE  userNAME = ? AND password = ?";
+		
+		PreparedStatement stmt = getPrepareStatement(sql , false);
+		
+		
+		if(stmt == null)
+			return false;
+		
+		ResultSet rs = null;
+		
+		try {
+			stmt.setString(1 , userName);
+			stmt.setString(2 , password);
+			rs = stmt.executeQuery();
+			
+			if(rs.next())
+				loggedIn = true;
+			
+			
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+			
+		}finally {
+			if(rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		
+		
+		return loggedIn;
+	}
+	
+	
+	
 	public static Admin getRow(int id) {
 		
 		initTable();

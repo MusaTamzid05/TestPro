@@ -102,10 +102,10 @@ public class Main {
 	public static void main(String[] argv) {
 		
 		//testConnection();
-		//testClassifier();
+		testClassifier();
 	    //testDataBase();
 		
-		testFindUniversityLink();
+		//testFindUniversityLink();
 		
 	}
 	

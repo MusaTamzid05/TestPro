@@ -94,7 +94,7 @@ public class QueryManager {
 	
 
 	
-	protected static PreparedStatement getPrepareStatement(String sql, boolean generateKey) {
+	public static PreparedStatement getPrepareStatement(String sql, boolean generateKey) {
 		
 		PreparedStatement stmt = null;
 		
