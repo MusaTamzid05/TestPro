@@ -21,5 +21,7 @@
 	<classpathentry kind="lib" path="/home/musa/javacv-bin/videoinput-platform.jar"/>
 	<classpathentry kind="lib" path="libs/mysql-connector-java-5.1.21-bin.jar"/>
 	<classpathentry kind="lib" path="libs/jsoup-1.10.3.jar"/>
+	<classpathentry kind="lib" path="libs/selenium-server-standalone-3.5.0.jar"/>
+	<classpathentry kind="lib" path="libs/client-combined-3.5.0-nodeps.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
