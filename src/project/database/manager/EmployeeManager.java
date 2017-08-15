@@ -4,16 +4,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import project.database.tables.Employee;
 
-public class EmployeeManager {
+
+public class EmployeeManager extends QueryManager {
 	
 	
-	/*
-	public static Admin  getAdminByName(String name) {
+	
+	public static Employee  getEmployeeByName(String name) {
 			
-			Admin bean =  null;
+			Employee bean =  null;
 			
-			String sql = "SELECT * FROM admin Employee WHERE name = ?";
+			String sql = "SELECT * FROM employee WHERE name = ?";
 			
 			
 			
@@ -32,8 +34,15 @@ public class EmployeeManager {
 				
 				if(rs.next()) {
 					
-					bean.setUserName(rs.getString("userName"));
-					bean.setPassword(rs.getString("password"));
+					bean = new Employee();
+					
+					bean.setName(rs.getString("name"));
+					bean.setEmail(rs.getString("password"));
+					bean.setContact_no(rs.getString("contact_no"));
+					bean.setAge(rs.getInt("age"));
+					bean.setCityName("city_name");
+					bean.setUniversity_name("university_name");
+					
 				}
 					
 				
@@ -56,5 +65,5 @@ public class EmployeeManager {
 			
 			return bean;
 		}
-		*/
+		
 }

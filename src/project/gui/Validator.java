@@ -7,9 +7,13 @@ import java.sql.SQLException;
 
 
 import project.FaceDetector;
+import project.database.manager.EmployeeManager;
 import project.database.manager.QueryManager;
+import project.util.Regex;
 
 public class Validator {
+	
+	static final String EMAIL_REGEX = ".*@(gmail|hotmail|yahoo).com";
 	
 	public static boolean validateImage(String imagePath) {
 		
@@ -37,45 +41,40 @@ public class Validator {
 		
 		if(name.length() != 0) {
 			
-			String sql = "SELECT * FROM employee WHERE name  = ?";
-	
-			PreparedStatement stmt = QueryManager.getPrepareStatement(sql , false);
-			
-			
-			if(stmt == null)
-				return false;
-			
-			ResultSet rs = null;
-			
-			try {
-				stmt.setString(1 , name);
-				
-				rs = stmt.executeQuery();
-				
-				if(!rs.next())
-					isNameValid = true;
-				
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-				
-				
-			}finally {
-				if(rs != null)
-					try {
-						rs.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			}
-			
-			
+			if(EmployeeManager.getEmployeeByName(name) == null)
+				isNameValid = true;
 		
 			
 		}
 		
 		return isNameValid;
+	}
+	
+	public static boolean validateEmail(String email) {
+		
+		boolean isEmailValid = false;
+		
+		if(Regex.matchFound(EMAIL_REGEX , email))
+			isEmailValid = true;
+		
+		return isEmailValid;
+		
+		
+	}
+	
+	public static boolean validateContact(String number) {
+		
+		boolean isNumberValidated = false;
+		
+		if(number.length() == 11) {
+			
+			if(Regex.matchFound("^01(5|6|7|8)\\d\\d\\d\\d\\d\\d\\d\\d", number))
+				isNumberValidated = true;
+			
+		}
+		
+		
+		return isNumberValidated;
 	}
 
 }

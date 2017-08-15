@@ -153,6 +153,9 @@ public class AddEmployee extends JFrame
 	
 	
 private void saveToDataBase() {
+	
+	
+	    boolean allDataValidated = true;
 		
 		String sscYear = "";
 		String sscRoll = "";
@@ -190,16 +193,34 @@ private void saveToDataBase() {
 		String city= cityBox.getSelectedItem().toString();
 		
 		if(!Validator.validateImage(imagePath)) {
-			
-			
 			imageErrorLabel.setText("Invalid image");
-			return;
+			allDataValidated = false;
 			
 		}
+			
+		else
+			imageErrorLabel.setText("Valid image");
 		
+		if(!Validator.validateName(name)) {
+			nameErrorLabel.setText("Failed");
+			allDataValidated = false;
+			
+		}else
+			nameErrorLabel.setText("Name valid.");
 		
-		System.out.println("The code should not come here.");
-		imageErrorLabel.setText("Valid image");
+		if(!Validator.validateEmail(email)) {
+			emailErrorLabel.setText("Failed");
+			allDataValidated = false;
+			
+		}else
+			emailErrorLabel.setText("Email validated");
+		
+		if(!Validator.validateContact(contact)) {
+			contactErrorLabel.setText("failed");
+			allDataValidated = false;
+		}else 
+			contactErrorLabel.setText("valid");
+			
 		
 	}
 
