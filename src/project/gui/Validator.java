@@ -41,7 +41,7 @@ public class Validator {
 		
 		if(name.length() != 0) {
 			
-			if(EmployeeManager.getEmployeeByName(name) == null)
+			if(EmployeeManager.getEmployeeBy("name" ,name) == null)
 				isNameValid = true;
 		
 			

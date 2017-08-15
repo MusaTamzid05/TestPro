@@ -1,12 +1,18 @@
 package project.gui;
 
 import java.io.File;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import project.database.DataBaseConnector;
+import project.database.manager.UniversityInfoManager;
+import project.database.manager.UniversityLinkManager;
+import project.database.tables.UniversityInfo;
+import project.database.tables.UniversityLink;
 
 public class AddEmployee extends JFrame
 {
@@ -26,13 +32,14 @@ public class AddEmployee extends JFrame
 	private JLabel emailLabel, emailErrorLabel; 
 	private JLabel contactLabel, contactErrorLabel;
 	private JLabel ageLabel, cityLabel, varsityLabel;
+	private JLabel downloadLabel;
 	
 	private JLabel imageErrorLabel;
 	
 	
 	private JTextField nameFld, emailFld, contactFld;
 	private JComboBox ageBox, cityBox, univarsityBox;
-	private JButton addButton, backButton, univarsityInfoButton, sscInfoButton, hscInfoButton, browseButton;
+	private JButton addButton, backButton, sscInfoButton, hscInfoButton, browseButton;
 	
 	//private static String age[] = new String[26];
 	private static String cityName[] = {"Select One", "Barisal", "Chittagong", "Comilla", "Dhaka", "Dinajpur", "Jessore", "Rajshahi", "Sylhet"};
@@ -81,6 +88,8 @@ public class AddEmployee extends JFrame
 		cityLabel = createLabel("City Name", 220, 425, 0, 0);
 		varsityLabel = createLabel("Univarsity Name", 0, 495, 0, 0);
 		
+	
+		
 		nameFld = createTextField(100, 230);
 		
 		emailFld = createTextField(100, 330);
@@ -100,14 +109,22 @@ public class AddEmployee extends JFrame
 		
 		imageErrorLabel = createLabel("", 0, 10, 0, 0);
 		
-		univarsityBox = new JComboBox(varsityName);
+		
+		
+		ArrayList<String> names = UniversityLinkManager.getUniversityNames();
+		
+		univarsityBox = new JComboBox();
+		
+		for(String name : names) 
+			univarsityBox.addItem(name);
+		
 		univarsityBox.setSelectedIndex(0);
-		univarsityBox.setBounds(posX+100, posY+500, cmbBoxWidth, cmbBoxHeight);
+		univarsityBox.setBounds(posX+100, posY+500, cmbBoxWidth + 200, cmbBoxHeight);
 		univarsityBox.addActionListener(eh);
 		add(univarsityBox);
 		
 		browseButton = createButton("Browse Image", 0, 100);
-		univarsityInfoButton = createButton("University Info",250, 500);
+	
 		sscInfoButton = createButton("SSC Info", 100, 550);
 		hscInfoButton = createButton("HSC Info", 255, 550);
 		addButton = createButton("Add Employee",100, 640);
@@ -152,7 +169,25 @@ public class AddEmployee extends JFrame
     }
 	
 	
-private void saveToDataBase() {
+	private void setUniversityData() {
+		
+		UniversityLink uniLink = UniversityLinkManager.SearchByName(univarsityBox.getSelectedItem().toString());
+		System.out.println(uniLink.getId());
+		int id = uniLink.getId();
+		
+		UniversityInfo info = UniversityInfoManager.searchByID(id);
+		
+		if(info == null) {
+			System.out.println("Data is not available.");
+			infoMsgLabel.setText("Downloading university data.");
+		}
+		
+		
+	}
+	
+	
+	
+	private void saveToDataBase() {
 	
 	
 	    boolean allDataValidated = true;
@@ -220,6 +255,9 @@ private void saveToDataBase() {
 			allDataValidated = false;
 		}else 
 			contactErrorLabel.setText("valid");
+		
+		
+		setUniversityData();
 			
 		
 	}
@@ -261,24 +299,8 @@ private void saveToDataBase() {
 			
 			if(check.equals("Add Employee"))
 			{
-				
 				saveToDataBase();
 				
-				/*
-				if(EmployeInfoValidator.isNameValid(nameFld.getText()) && EmployeInfoValidator.isIDValid(idFld.getText()) && EmployeInfoValidator.isEmailValid(emailFld.getText()) && EmployeInfoValidator.isContactValid(contactFld.getText()))
-				{
-					ae.dispose();
-					//new ShowList();
-					JOptionPane.showMessageDialog(null, "Employee added successfully");
-				}
-				else
-				{
-					nameErrorLabel.setText("Name Invalid");
-					idErrorLabel.setText("ID Invalid");
-					emailErrorLabel.setText("Email Invalid");
-					contactErrorLabel.setText("Conatct No. Invalid");
-				}	
-				*/
 			}else if(check.equals("Browse Image")) {
 				setImagePath();
 			}

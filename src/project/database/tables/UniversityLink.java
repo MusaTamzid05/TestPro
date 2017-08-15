@@ -36,6 +36,10 @@ public class UniversityLink {
 		this.link = link;
 		
 	}
+
+	public UniversityLink() {
+		
+	}
 	
 	
 

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import project.database.tables.Admin;
+import project.database.tables.UniversityLink;
 
 
 
@@ -42,6 +43,46 @@ public class UniversityLinkManager extends QueryManager {
 		
 		
 		return link;
+	}
+	
+	
+	static public  UniversityLink SearchByName(String name) {
+		
+		
+		UniversityLink university = null;
+		
+		
+		String sql = "SELECT * FROM  university_link WHERE name = ?";
+		PreparedStatement stmt = getPrepareStatement(sql , false);
+		
+		if(stmt == null) {
+			System.out.println("Error searching link of university.");
+			return null;
+		}
+			
+		ResultSet rs = null;
+	
+		try {
+			stmt.setString(1, name);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				university = new UniversityLink();
+				university.setId(rs.getInt("id"));
+				university.setName(name);
+				university.setLink(rs.getString("link"));
+				
+			}else {
+				System.out.println("No university with name" + name);
+			}
+		}catch(SQLException e) {
+			System.err.println(e.getMessage());
+		}
+		
+		
+		return university;
+		
+		
 	}
 	
 	static public ArrayList<String> getUniversityNames(){

@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 
 
 
-CREATE TABLE IF NOT EXISTS `university_links` (
+CREATE TABLE IF NOT EXISTS `university_link` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `link` varchar(50) NOT NULL,
