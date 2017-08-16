@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 import project.database.DataBaseConnector;
+import project.database.manager.EmployeeManager;
+import project.database.tables.Employee;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -16,12 +18,11 @@ public class MainMenu extends JFrame
 	private JButton addEmpButton, removeEmpButton, logOutButton, adminSettingsButton;
 	private JList list;
 	
+	ArrayList<Employee> employees;
+	
 	private boolean isRoot;
 
-	private static String employeeName[] = {
-			"Musa", "Linkon", "Salman",
-			"Ripon", "Zahid", "Maisha",
-			"Mushfiq", "Faysal", "Shakib",};
+	private static String employeeNames[] = null;
 
 	EventHandler eh = new EventHandler(this);
 
@@ -45,8 +46,15 @@ public class MainMenu extends JFrame
 		addEmpButton = createButton("Add Employee", 0, 0);
 		removeEmpButton = createButton("Remove Employee", 150, 0);
 		logOutButton = createButton("Log Out", 300, 0);
+		
+		
+		employees = EmployeeManager.getAll();
+		employeeNames = new String[employees.size()];
+		
+		for(int i = 0 ; i < employees.size() ; i++)
+			employeeNames[i]= employees.get(i).getName();
 
-		list = new JList(employeeName);
+		list = new JList(employeeNames);
 		//list.setBounds(posX+20, posY+50, 50, 50);
 		list.setPreferredSize(new Dimension(300, 200));
 		list.setVisibleRowCount(5);
@@ -109,13 +117,12 @@ public class MainMenu extends JFrame
 		}
 
 		@Override
-		public void valueChanged(ListSelectionEvent event)
-		{
-			if(list.getSelectedIndex()==0)
-			{
-				menu.dispose();
-				//new EmployeeInfo();
-			}
+		public void valueChanged(ListSelectionEvent event){
+			
+			Employee employee = employees.get(list.getSelectedIndex());
+			menu.dispose();
+			new EmployeeInfo(employee , isRoot);
+			
 		}
 	}
 	

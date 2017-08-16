@@ -16,6 +16,7 @@ import project.database.manager.UniversityLinkManager;
 import project.database.tables.Employee;
 import project.database.tables.UniversityInfo;
 import project.database.tables.UniversityLink;
+import project.util.Helper;
 
 public class AddEmployee extends JFrame
 {
@@ -155,6 +156,7 @@ public class AddEmployee extends JFrame
 		return button;
 	}
 	
+	/*
 	public ImageIcon ResizeImage(String ImagePath)
     {
         ImageIcon MyImage = new ImageIcon(ImagePath);
@@ -163,6 +165,7 @@ public class AddEmployee extends JFrame
         ImageIcon image = new ImageIcon(newImg);
         return image;
     }
+    */
 	
 	
 	private void setUniversityData() {
@@ -309,7 +312,8 @@ public class AddEmployee extends JFrame
 		return false;
 		
 	}
-
+	
+	
 	private void setImagePath() {
 		
 		JFileChooser file = new JFileChooser();
@@ -326,9 +330,10 @@ public class AddEmployee extends JFrame
 	        File selectedFile = file.getSelectedFile();
 	        String path = selectedFile.getAbsolutePath();
 	        imagePath = path;
-	        imageLabel.setIcon(ResizeImage(path));
+	        imageLabel.setIcon(Helper.ResizeImage(path , imageLabel));
 	    }
 	}
+	
 
 	
 	private class EventHandler implements ActionListener, FocusListener
