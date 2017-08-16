@@ -134,6 +134,9 @@ public class WikiScraper{
         	   if(me.getKey().equals("Location"))
         		   universityInfo.setLocation(me.getValue());
         	   
+        	   if(me.getKey().equals("Administrative_staff"))
+        		   universityInfo.setAdminStuffs(me.getValue());
+        	   
         	   
 
             

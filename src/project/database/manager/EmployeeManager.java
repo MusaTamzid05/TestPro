@@ -63,5 +63,10 @@ public class EmployeeManager extends QueryManager {
 			
 			return bean;
 		}
+	
+	boolean insertData(Employee employee) {
+		
+		return false;
+	}
 		
 }

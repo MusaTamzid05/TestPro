@@ -80,6 +80,16 @@ public class UniversityInfo {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+	
+	private int id;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	private String other_students;
 	private String campus;
 	private String undergraduates;
@@ -88,6 +98,13 @@ public class UniversityInfo {
 	private String websites;
 	private String motto;
 	private String acadamicStuff;
+	private String adminStuffs;
+	public String getAdminStuffs() {
+		return adminStuffs;
+	}
+	public void setAdminStuffs(String adminStuffs) {
+		this.adminStuffs = adminStuffs;
+	}
 	private String type;
 	private String students;
 	private String viseChans;

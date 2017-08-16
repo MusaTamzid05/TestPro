@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import project.crawler.WikiScraper;
 import project.database.DataBaseConnector;
 import project.database.manager.UniversityInfoManager;
 import project.database.manager.UniversityLinkManager;
@@ -180,8 +181,20 @@ public class AddEmployee extends JFrame
 		if(info == null) {
 			System.out.println("Data is not available.");
 			infoMsgLabel.setText("Downloading university data.");
-		}
+			
+			System.out.println("Getting info from " + uniLink.getLink());
+			String link = "https://en.wikipedia.org/" + uniLink.getLink();
+			info = WikiScraper.getInfoFrom(link);;
+			
+			if(info == null) 
+				JOptionPane.showMessageDialog(null, "Network connection problem!! University Info could be be download.");
+			else {
+				UniversityInfoManager.insert(info , id);
+				JOptionPane.showMessageDialog(null, "Data downloaded successfully.");
+			}
+				
 		
+		}
 		
 	}
 	
@@ -258,6 +271,8 @@ public class AddEmployee extends JFrame
 		
 		
 		setUniversityData();
+		
+		// need to insert the data here.
 			
 		
 	}

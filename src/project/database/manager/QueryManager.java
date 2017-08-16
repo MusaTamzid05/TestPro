@@ -16,6 +16,8 @@ public class QueryManager {
 	protected static ArrayList<String> dataName;
 	protected static String tableName;
 	
+	
+	
 
 	protected static String getInsertQuery() {
 		
