@@ -15,6 +15,8 @@ public class MainMenu extends JFrame
 	int buttonWidth = 140, buttonHeight = 20;
 	private JButton addEmpButton, removeEmpButton, logOutButton, adminSettingsButton;
 	private JList list;
+	
+	private boolean isRoot;
 
 	private static String employeeName[] = {
 			"Musa", "Linkon", "Salman",
@@ -26,6 +28,7 @@ public class MainMenu extends JFrame
 	public MainMenu(boolean isRoot)
 	{
 		super("Show Employees");
+		this.isRoot = isRoot;
 		//setLayout(null);
 		setLayout(new FlowLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,7 +93,7 @@ public class MainMenu extends JFrame
 			else if(check.equals("Add Employee"))
 			{
 				menu.dispose();
-				new AddEmployee();
+				new AddEmployee(isRoot);
 			}
 			else if(check.equals("Remove Employee"))
 			{

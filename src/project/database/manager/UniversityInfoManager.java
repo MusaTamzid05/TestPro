@@ -26,12 +26,14 @@ public class UniversityInfoManager extends QueryManager {
 			stmt.setInt(1 , id);
 			rs = stmt.executeQuery();
 			
+			
+			
 			if(rs.next()) {
 				
 			bean = new UniversityInfo();
-			bean.setOther_students(rs.getString("Other_student"));
+			bean.setOther_students(rs.getString("Other_students"));
 			bean.setCampus(rs.getString("Campus"));
-			bean.setUndergraduates(rs.getString("Undergraduates"));
+			bean.setUndergraduates(rs.getString("Undergraduates"));	
 			bean.setPostgraduates(rs.getString("Postgraduates"));
 			bean.setDoctralStudents(rs.getString("Doctoral_students"));
 			bean.setWebsites(rs.getString("Website"));
@@ -75,7 +77,7 @@ public class UniversityInfoManager extends QueryManager {
 	public static boolean  insert(UniversityInfo info, int uniID) {
 		
 		String sql = "INSERT INTO uni_info(Other_students, Campus, Undergraduates, Postgraduates, Doctoral_students, Website, Motto_in_English, Academic_staff, TYPE, Administrative_staff, Students, Vice_Chancellor, Established, Location, uni_id)"
-				+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		
 		boolean dataInserted = false;
@@ -95,19 +97,18 @@ public class UniversityInfoManager extends QueryManager {
 			stmt.setString(1 , info.getOther_students());
 			stmt.setString(2 , info.getCampus());
 			stmt.setString(3 ,  info.getUndergraduates());
-			stmt.setString(4, info.getUndergraduates());
-			stmt.setString(5, info.getPostgraduates());
-			stmt.setString(6, info.getDoctralStudents());
-			stmt.setString(7, info.getWebsites());
-			stmt.setString(8, info.getMotto());
-			stmt.setString(9, info.getAcadamicStuff());
-			stmt.setString(10 ,  info.getType());
-			stmt.setString(11 , info.getAdminStuffs());
-			stmt.setString(12 , info.getStudents());
-			stmt.setString(13, info.getViseChans());
-			stmt.setString(14, info.getEstablished());
-			stmt.setString(15, info.getLocation());
-			stmt.setInt(16 ,  uniID);
+			stmt.setString(4, info.getPostgraduates());
+			stmt.setString(5, info.getDoctralStudents());
+			stmt.setString(6, info.getWebsites());
+			stmt.setString(7, info.getMotto());
+			stmt.setString(8, info.getAcadamicStuff());
+			stmt.setString(9 ,  info.getType());
+			stmt.setString(10 , info.getAdminStuffs());
+			stmt.setString(11 , info.getStudents());
+			stmt.setString(12, info.getViseChans());
+			stmt.setString(13, info.getEstablished());
+			stmt.setString(14, info.getLocation());
+			stmt.setInt(15,  uniID);
 			
 	
 			

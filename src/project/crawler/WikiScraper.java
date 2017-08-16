@@ -79,15 +79,21 @@ public class WikiScraper{
     
     public static UniversityInfo  getInfoFrom(String url) {
     	
+    	System.out.println("Inside wiki scaraper ..." + url);
+    	
     	
     	UniversityInfo universityInfo = null;
     	HashMap<String , String> universityData = getData(url);
     	
+    
+    	
     	if(universityData.size() == 0)
     		return null;
     	
-    	   Set<Map.Entry<String  , String>> set = universityData.entrySet();
-    	   universityInfo = new UniversityInfo();
+   
+    	
+    	  Set<Map.Entry<String  , String>> set = universityData.entrySet();
+    	  universityInfo = new UniversityInfo();
 
            for(Map.Entry<String , String> me : set){
         	   

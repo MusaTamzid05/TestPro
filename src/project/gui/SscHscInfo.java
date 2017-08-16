@@ -20,16 +20,17 @@ public class SscHscInfo extends JFrame
 	private JTextField rollFld, regFld;
 	private JComboBox examBox, yearBox, boardBox;
 	private JButton resetButton,submitButton, backButton;
+	boolean isRoot;
 	
 	ExamInfo examInfo;
 	
-	EventHandler eh = new EventHandler(this);
+	EventHandler eh = new EventHandler(this );
 	
-	public SscHscInfo(ExamInfo examInfo)
+	public SscHscInfo(ExamInfo examInfo , boolean isRoot)
 	{
 		super("Admin Validation");
 		this.examInfo = examInfo;
-		
+		this.isRoot = isRoot;
 		setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600, 400);
@@ -120,7 +121,7 @@ public class SscHscInfo extends JFrame
 			else if(check.equals("Back"))
 			{
 				shi.dispose();
-				new AddEmployee();
+				new AddEmployee(isRoot);
 			}else if (check.equals("Submit")) {
 				
 				

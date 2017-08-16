@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import project.database.tables.Admin;
 import project.database.tables.Employee;
 
 
@@ -64,9 +65,74 @@ public class EmployeeManager extends QueryManager {
 			return bean;
 		}
 	
-	boolean insertData(Employee employee) {
+	
 		
-		return false;
-	}
+	public static boolean insert(Employee employee) {
+			
+			
+			
+			boolean dataInserted = false;
+			
+			String sql = "INSERT INTO employee( name, email, contact_no, age, university_name, city_name, image_path) VALUES (?,?,?,?,?,?,?)";
+			ResultSet key = null;
+			
+			
+			try {
+				
+				System.out.println(sql);
+				PreparedStatement stmt = getPrepareStatement(sql , true);
+				
+				if(stmt == null) {
+					System.out.println("Statement problem..Employee insert failed!!");
+					return dataInserted;
+				}
+				
+				stmt.setString(1 , employee.getName());
+				stmt.setString(2 , employee.getEmail());
+				stmt.setString(3 , employee.getContact_no());
+				stmt.setInt(4, employee.getAge());
+				stmt.setString(5, employee.getUniversity_name());
+				stmt.setString(6, employee.getCityName());
+				stmt.setString(7, employee.getImagePath());
+				
+				
+				
+				int affected= stmt.executeUpdate();
+				
+				if(affected == 1) {
+					
+					System.out.println("Data affected " + affected);
+					
+					// get the new id
+					key = stmt.getGeneratedKeys();
+					key.next();
+					int newKey = key.getInt(1);
+					employee.setId(newKey);
+					dataInserted = true;
+					System.out.println("Data inserted => " + dataInserted);
+					
+				}else {
+					
+					System.out.println("Now rows affected.");
+					System.out.println("Affected count " + affected);
+					
+				}
+				
+			}catch (SQLException e) {
+				System.out.println("Error: " + e.getMessage());
+				
+			}finally {
+				if(key != null)
+					try {
+						key.close();
+					} catch (SQLException e) {
+					
+						e.printStackTrace();
+					}
+			}
+			
+			System.out.println("returing the inserted data "+ dataInserted);
+			return dataInserted;
+		}
 		
 }

@@ -25,6 +25,9 @@ public class Downloader{
     }
 
     private void closeStream(){
+    	
+    	if(stream == null)
+    		return;
 
 
         try{

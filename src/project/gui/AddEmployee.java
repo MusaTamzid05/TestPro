@@ -10,8 +10,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import project.crawler.WikiScraper;
 import project.database.DataBaseConnector;
+import project.database.manager.EmployeeManager;
 import project.database.manager.UniversityInfoManager;
 import project.database.manager.UniversityLinkManager;
+import project.database.tables.Employee;
 import project.database.tables.UniversityInfo;
 import project.database.tables.UniversityLink;
 
@@ -47,20 +49,13 @@ public class AddEmployee extends JFrame
 	private static String varsityName[] = {"Select One", "AIUB", "BRAC", "BUET", "DU", "DIU", "EWU", "IUB", "NSU", "UIU"};
 	private static String age2[] = {"Select One", "25", "26", "27", "28", "29", "30","31", "32", "33", "34", "35", "36", "37","38", "39", "40", "41", "42", "43", "44","45", "46", "47", "48", "49", "50"};
 	
-	/*private static void setAge()
-	{
-		int ageIncr = 25;
-		
-		for(int i=0;i<26;i++)
-		{
-			age[i] = ageIncr + "";
-			ageIncr++;
-		}
-	}*/
+	
 
 	EventHandler eh = new EventHandler(this);
 	
-	public AddEmployee()
+	private boolean isRoot;
+	
+	public AddEmployee(boolean isRoot)
 	{
 		super("Add Employee");
 		setLayout(null);
@@ -183,7 +178,7 @@ public class AddEmployee extends JFrame
 			infoMsgLabel.setText("Downloading university data.");
 			
 			System.out.println("Getting info from " + uniLink.getLink());
-			String link = "https://en.wikipedia.org/" + uniLink.getLink();
+			String link = "https://en.wikipedia.org" + uniLink.getLink();
 			info = WikiScraper.getInfoFrom(link);;
 			
 			if(info == null) 
@@ -199,10 +194,21 @@ public class AddEmployee extends JFrame
 	}
 	
 	
+	private void saveResult() {
+		
+		if(sscExamInfo != null) {
+			
+		}
+		
+		if(hscExamInfo != null) {
+			
+		}
+	}
 	
-	private void saveToDataBase() {
 	
-	
+	private boolean saveToDataBase() {
+		
+		
 	    boolean allDataValidated = true;
 		
 		String sscYear = "";
@@ -269,11 +275,38 @@ public class AddEmployee extends JFrame
 		}else 
 			contactErrorLabel.setText("valid");
 		
+		if((ageBox.getSelectedIndex() == 0) || (cityBox.getSelectedIndex() == 1) ) {
+			allDataValidated = false;
+			
+		}
 		
+		if(!allDataValidated)
+			return false;
+		
+		
+		
+		
+		
+		saveResult();
 		setUniversityData();
 		
-		// need to insert the data here.
-			
+		Employee employee = new Employee();
+		employee.setName(name);
+		employee.setAge(Integer.parseInt(age));
+		employee.setContact_no(contact);
+		employee.setCityName(cityBox.getSelectedItem().toString());
+		employee.setImagePath(imagePath);
+		employee.setEmail(email);
+		employee.setUniversity_name(univarsityBox.getSelectedItem().toString());
+		
+		
+		
+		
+		if(EmployeeManager.insert(employee))
+		     return true;
+
+		
+		return false;
 		
 	}
 
@@ -314,7 +347,12 @@ public class AddEmployee extends JFrame
 			
 			if(check.equals("Add Employee"))
 			{
-				saveToDataBase();
+				if(saveToDataBase()) {
+					JOptionPane.showMessageDialog(null, "Data Inserted.");
+					addEmployee.dispose();
+					new MainMenu(isRoot);
+					
+				}
 				
 			}else if(check.equals("Browse Image")) {
 				setImagePath();
@@ -322,12 +360,12 @@ public class AddEmployee extends JFrame
 			else if(check.equals("SSC Info") ){
 				
 				sscExamInfo = new ExamInfo();
-				new SscHscInfo(sscExamInfo);
+				new SscHscInfo(sscExamInfo , isRoot);
 			
 			}else if(check.equals("HSC Info") ){
 				
 				hscExamInfo = new ExamInfo();
-				new SscHscInfo(hscExamInfo);
+				new SscHscInfo(hscExamInfo , isRoot);
 			
 			}
 				

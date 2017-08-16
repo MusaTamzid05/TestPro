@@ -44,7 +44,17 @@ public class Employee {
 	private String contact_no;
 	private String university_name;
 	private String cityName;
+	private String imagePath;
+	
+	
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 	private int age;
+	
 	
 	public int getAge() {
 		return age;
