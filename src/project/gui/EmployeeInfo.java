@@ -1,6 +1,6 @@
 package project.gui;
 import java.awt.Color;
-import java.awt.Font;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -150,12 +150,12 @@ public class EmployeeInfo extends JFrame
 		}
 		
 		@Override
-		public void actionPerformed(ActionEvent event)
-		{
+		public void actionPerformed(ActionEvent event){
+			
 			String check = event.getActionCommand();
 			
-			if(check.equals(updateButtonName))
-			{
+			if(check.equals(updateButtonName)){
+				
 				ei.dispose();
 				new AddEmployee(isRoot ,ei.employee );
 			}

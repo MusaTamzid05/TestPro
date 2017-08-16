@@ -43,6 +43,7 @@ public class EmployeeManager extends QueryManager {
 					bean.setAge(rs.getInt("age"));
 					bean.setCityName("city_name");
 					bean.setUniversityName("university_name");
+					bean.setId(rs.getInt("id"));
 					
 				}
 					
@@ -87,7 +88,6 @@ public class EmployeeManager extends QueryManager {
 			rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) {
-				
 				
 			
 				employees.add(new Employee(rs.getInt("id") ,
@@ -192,6 +192,52 @@ public class EmployeeManager extends QueryManager {
 	
 	}
 	
+	
+	public static boolean update(Employee employee) {
+		
+		
+		
+		boolean isUpdated = false;
+		String sql = "UPDATE employee SET name= ? ,email= ? ,contact_no = ? ,age = ? ,university_name = ? ,city_name = ? ,image_path = ? WHERE id = ? ";
+		
+		try {
+			PreparedStatement stmt = getPrepareStatement(sql , false);
+			
+			if(stmt == null) {
+				System.out.println("Could not create the statement to update employee");
+				return false;
+			}
+			
+			stmt.setString(1 , employee.getName());
+			stmt.setString(2 ,  employee.getEmail());
+			stmt.setString(3 , employee.getContact_no());
+			stmt.setInt(4, employee.getAge());
+			stmt.setString(5, employee.getUniversity_name());
+			stmt.setString(6, employee.getCityName());
+			stmt.setString(7, employee.getImagePath());
+			stmt.setInt(8, employee.getId());
+			
+			int affected = stmt.executeUpdate();
+			
+			if(affected == 1) 
+				isUpdated = true;
+				
+			
+				
+			else
+				System.err.println(affected);
+			
+			
+			
+		}catch(SQLException e) {
+			System.err.println(e.getMessage());
+			
+		}
+		
+	
+		return isUpdated;
+		
+	}
 	
 	public static void main(String[] argv) {
 		

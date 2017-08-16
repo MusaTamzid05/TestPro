@@ -26,7 +26,7 @@ public class AddEmployee extends JFrame
 	ExamInfo sscExamInfo;
 	ExamInfo hscExamInfo;
 	
-	String imagePath = "";
+	private String imagePath = "";
 	
 	
 	
@@ -131,6 +131,8 @@ public class AddEmployee extends JFrame
 			
 			// for updating employee.
 			
+			
+			
 			String temp = String.valueOf((employee.getAge()));
 			ageBox.setSelectedItem(temp);
 			cityBox.setSelectedItem(employee.getCityName());
@@ -140,6 +142,7 @@ public class AddEmployee extends JFrame
 			emailFld.setText(employee.getEmail());
 			contactFld.setText(employee.getContact_no());
 			imageLabel.setIcon(Helper.ResizeImage(employee.getImagePath() , imageLabel));
+			imagePath = employee.getImagePath();
 			
 			addEditButtonName = "Edit Employee";
 			addButton = createButton(addEditButtonName,100, 640);
@@ -202,6 +205,10 @@ public class AddEmployee extends JFrame
 		}
 		
 		// here user is updating the employee record
+		
+		System.out.println("Trying to update employee data.");
+		if(EmployeeManager.update(employeeData))
+			return true;
 	
 		return false;
 	}
@@ -353,14 +360,29 @@ public class AddEmployee extends JFrame
 		saveResult();
 		setUniversityData();
 		
-		Employee employee = new Employee();
-		employee.setName(name);
-		employee.setAge(Integer.parseInt(age));
-		employee.setContact_no(contact);
-		employee.setCityName(cityBox.getSelectedItem().toString());
-		employee.setImagePath(imagePath);
-		employee.setEmail(email);
-		employee.setUniversityName(univarsityBox.getSelectedItem().toString());
+		if(employee == null) {
+			
+			employee = new Employee();
+			employee.setName(name);
+			employee.setAge(Integer.parseInt(age));
+			employee.setContact_no(contact);
+			employee.setCityName(cityBox.getSelectedItem().toString());
+			employee.setImagePath(imagePath);
+			employee.setEmail(email);
+			employee.setUniversityName(univarsityBox.getSelectedItem().toString());
+				
+		}else {
+			
+			
+			employee.setName(nameFld.getText());
+			employee.setAge(Integer.parseInt(ageBox.getSelectedItem().toString()));
+			employee.setContact_no(contactFld.getText());
+			employee.setCityName(cityBox.getSelectedItem().toString());
+			employee.setImagePath(imagePath);
+			employee.setUniversityName(univarsityBox.getSelectedItem().toString());
+			
+		}
+		
 		
 		
 		if(dataBaseOperation(employee))
