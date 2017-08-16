@@ -35,15 +35,27 @@ public class Validator {
 		
 	}
 	
-	public static boolean validateName(String name) {
+	public static boolean validateName(String name , boolean checkDatabase) {
+		
+		
 		
 		boolean isNameValid = false;
 		
 		if(name.length() != 0) {
 			
-			if(EmployeeManager.getEmployeeBy("name" ,name) == null)
-				isNameValid = true;
-		
+			isNameValid = true;
+			
+			if(checkDatabase == true) {
+				
+			
+				if(EmployeeManager.getEmployeeBy("name" ,name) == null)
+					isNameValid = true;
+				else
+					isNameValid = false;
+				
+			}
+			
+			return isNameValid;
 			
 		}
 		

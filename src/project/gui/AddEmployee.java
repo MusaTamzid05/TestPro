@@ -307,7 +307,18 @@ public class AddEmployee extends JFrame
 		else
 			imageErrorLabel.setText("Valid image");
 		
-		if(!Validator.validateName(name)) {
+		
+		boolean shouldCheckDatabase = false;
+		
+		//if  we are creating a new employee , so we should database for name
+		// if the name exists , we wont validate.if we are updating
+		// we should check database as the name is already there.
+		
+		if(employee == null) 
+			shouldCheckDatabase = true;	
+			
+		
+		if(!Validator.validateName(name , shouldCheckDatabase)) {
 			nameErrorLabel.setText("Failed");
 			allDataValidated = false;
 			
@@ -400,17 +411,14 @@ public class AddEmployee extends JFrame
 			
 			if(check.equals(addEditButtonName))
 			{
-				if(saveToDataBase()) 
+				if(saveToDataBase()) {
+					
 					JOptionPane.showMessageDialog(null, "Data Inserted.");
-				else
-					JOptionPane.showMessageDialog(null, "Data Insertion failed.");
+					addEmployee.dispose();
+					new MainMenu(isRoot);
 					
-					
-				
-				
-				addEmployee.dispose();
-				new MainMenu(isRoot);
-				
+				}
+						
 			}else if(check.equals("Browse Image")) {
 				setImagePath();
 			}
