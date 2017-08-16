@@ -17,7 +17,10 @@ public class QueryManager {
 	protected static String tableName;
 	
 	
-	
+	protected static void  initTableData() {
+		
+		
+	}
 
 	protected static String getInsertQuery() {
 		
@@ -92,6 +95,48 @@ public class QueryManager {
 		
 		
 		return "DELETE FROM "+ tableName + " WHERE id = ?" ;
+	}
+	
+	static public boolean delete(String tableName , String keyName , int id) {
+		
+		initTableData();
+		boolean dataDeleted = false;
+		
+		
+		
+		String sql = "DELETE FROM " + tableName + " WHERE " + keyName + " = ?";
+		
+		PreparedStatement stmt = getPrepareStatement(sql , false);
+		System.out.println(sql);
+		
+		if(stmt == null) {
+			System.out.println("The delete statement for " + tableName + " could not been created.");
+			return dataDeleted;
+		}
+		
+		
+		
+		try {
+			stmt.setInt(1 , id);
+			
+			int affected = stmt.executeUpdate();
+			
+			if(affected == 1)
+				dataDeleted = true;
+			else
+				dataDeleted = false;
+			
+			
+		} catch (SQLException e) {
+			
+			System.err.println(e.getMessage());
+		
+		}
+		
+		
+		
+		return dataDeleted;
+		
 	}
 	
 

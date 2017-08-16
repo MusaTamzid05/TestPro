@@ -3,10 +3,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.*;
 
+import project.Defines;
+import project.database.DataBaseConnector;
+import project.database.manager.EmployeeManager;
 import project.database.tables.Employee;
 import project.util.Helper;
 
@@ -43,7 +47,7 @@ public class EmployeeInfo extends JFrame
 	
 	
 	private boolean isRoot;
-	
+	private Employee employee;
 	
 	EventHandler eh = new EventHandler(this);
 	
@@ -52,6 +56,7 @@ public class EmployeeInfo extends JFrame
 		super("Employees Information");
 		
 		this.isRoot =isRoot;
+		this.employee = employee;
 		setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(640, 480);
@@ -160,6 +165,19 @@ public class EmployeeInfo extends JFrame
 			}
 			else if(check.equals(deleteButtonName)){
 				
+				
+				int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + ei.employee.getName() + " ?");
+				System.out.println("Choice : " + choice);
+				
+				if(choice == 0) {
+					if(EmployeeManager.delete(Defines.employeeTable , "id" , ei.employee.getId())) {
+						JOptionPane.showMessageDialog(null, "Data deleted");
+						ei.dispose();
+						new MainMenu(isRoot);
+					}else
+						JOptionPane.showMessageDialog(null, "Could not delete employee.");
+						
+				}
 			
 			}else if(check.equals(universityButtonName)){
 				
@@ -174,4 +192,16 @@ public class EmployeeInfo extends JFrame
 			}
 		}
 	}
+	
+	@Override
+	public void processWindowEvent(WindowEvent event) {
+		
+		if(event.getID() == WindowEvent.WINDOW_CLOSING) {
+			DataBaseConnector.getInstance().closeConnection();
+			dispose();
+			
+		}
+			
+	
+}
 }

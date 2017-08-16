@@ -13,12 +13,13 @@ public class EmployeeManager extends QueryManager {
 	
 	
 	
+	
+	 
+	
 	public static Employee  getEmployeeBy( String by , String name) {
 			
 			Employee bean =  null;
-			
 			String sql = "SELECT * FROM employee WHERE " + by  +" = ?";
-			
 			PreparedStatement stmt = getPrepareStatement(sql , false);
 			
 			
