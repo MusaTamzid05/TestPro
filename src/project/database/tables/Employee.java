@@ -22,16 +22,16 @@ public class Employee {
 		this.email = email;
 	}
 	public String getContact_no() {
-		return contact_no;
+		return contactNo;
 	}
 	public void setContact_no(String contact_no) {
-		this.contact_no = contact_no;
+		this.contactNo = contact_no;
 	}
 	public String getUniversity_name() {
-		return university_name;
+		return universityName;
 	}
-	public void setUniversity_name(String university_name) {
-		this.university_name = university_name;
+	public void setUniversityName(String universityName) {
+		this.universityName = universityName;
 	}
 	public String getCityName() {
 		return cityName;
@@ -41,8 +41,8 @@ public class Employee {
 	}
 	private String name;
 	private String email;
-	private String contact_no;
-	private String university_name;
+	private String contactNo;
+	private String universityName;
 	private String cityName;
 	private String imagePath;
 	
@@ -61,6 +61,25 @@ public class Employee {
 	}
 	public void setAge(int age) {
 		this.age = age;
+	}
+	
+	public Employee(int id , String name ,  int age , String email , 
+			String contact, String universityName , String cityName , 
+			String imagePath ) {
+		
+		this.id = id;
+		this.name = name;
+		this.age = age;
+		this.email = email;
+		this.contactNo = contact;
+		this.cityName = cityName;
+		this.universityName = universityName;
+		this.imagePath = imagePath;
+		
+	}
+	
+	public Employee() {
+		
 	}
 	
 	

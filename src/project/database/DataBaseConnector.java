@@ -56,8 +56,11 @@ public class DataBaseConnector {
 	public void closeConnection() {
 		
 		
-		if(conn == null)
+		if(conn == null) {
+			System.out.println("Database is already close.");
 			return;
+		}
+			
 	
 		System.out.println("Closing the connection.");
 		try {

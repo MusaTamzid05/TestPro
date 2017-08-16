@@ -297,7 +297,7 @@ public class AddEmployee extends JFrame
 		employee.setCityName(cityBox.getSelectedItem().toString());
 		employee.setImagePath(imagePath);
 		employee.setEmail(email);
-		employee.setUniversity_name(univarsityBox.getSelectedItem().toString());
+		employee.setUniversityName(univarsityBox.getSelectedItem().toString());
 		
 		
 		
@@ -376,6 +376,7 @@ public class AddEmployee extends JFrame
 			else if(check.equals("Back"))
 			{
 				addEmployee.dispose();
+				new MainMenu(isRoot);
 				//new ShowList();
 			}
 		}

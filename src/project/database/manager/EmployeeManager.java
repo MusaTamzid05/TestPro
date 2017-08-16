@@ -3,6 +3,7 @@ package project.database.manager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import project.database.tables.Admin;
 import project.database.tables.Employee;
@@ -40,7 +41,7 @@ public class EmployeeManager extends QueryManager {
 					bean.setContact_no(rs.getString("contact_no"));
 					bean.setAge(rs.getInt("age"));
 					bean.setCityName("city_name");
-					bean.setUniversity_name("university_name");
+					bean.setUniversityName("university_name");
 					
 				}
 					
@@ -65,6 +66,60 @@ public class EmployeeManager extends QueryManager {
 			return bean;
 		}
 	
+	
+	public static ArrayList<Employee> getAll(){
+		
+		String sql = "SELECT * FROM employee";
+		ArrayList<Employee> employees= new ArrayList<Employee>();
+		
+		PreparedStatement stmt = getPrepareStatement(sql , false);
+		
+		if(stmt == null) {
+			System.err.println("Error preparing the statement for getting all employee ");
+			return employees;
+		}
+		
+		ResultSet rs = null;
+		
+		try {
+			
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				
+			
+				employees.add(new Employee(rs.getInt("id") ,
+						                  rs.getString("name"),
+						                  rs.getInt("age"),
+						                  rs.getString("email"),
+						                  rs.getString("contact_no"),
+						                  rs.getString("university_name"),
+						                  rs.getString("city_name"),
+						                  rs.getString("image_path")
+
+						
+						));
+			}
+			
+		}catch(SQLException e) {
+			System.err.println(e);
+			
+		}finally {
+			
+			if(rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					
+			}
+		}
+			
+
+	
+		return employees;
+	}
+
 	
 		
 	public static boolean insert(Employee employee) {
@@ -133,6 +188,14 @@ public class EmployeeManager extends QueryManager {
 			
 			System.out.println("returing the inserted data "+ dataInserted);
 			return dataInserted;
-		}
+	
+	}
+	
+	
+	public static void main(String[] argv) {
+		
+		ArrayList<Employee> employees = getAll();
+		System.out.println(employees.size());
+	}
 		
 }
