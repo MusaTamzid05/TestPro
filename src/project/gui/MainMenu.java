@@ -101,7 +101,7 @@ public class MainMenu extends JFrame
 			else if(check.equals("Add Employee"))
 			{
 				menu.dispose();
-				new AddEmployee(isRoot);
+				new AddEmployee(isRoot , null);
 			}
 			else if(check.equals("Remove Employee"))
 			{

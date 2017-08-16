@@ -157,7 +157,7 @@ public class EmployeeInfo extends JFrame
 			if(check.equals(updateButtonName))
 			{
 				ei.dispose();
-				//new UpdateInfo();
+				new AddEmployee(isRoot ,ei.employee );
 			}
 			else if(check.equals(backButtonName)){
 				ei.dispose();

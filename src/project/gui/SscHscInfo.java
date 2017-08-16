@@ -121,7 +121,7 @@ public class SscHscInfo extends JFrame
 			else if(check.equals("Back"))
 			{
 				shi.dispose();
-				new AddEmployee(isRoot);
+				new AddEmployee(isRoot , null);
 			}else if (check.equals("Submit")) {
 				
 				

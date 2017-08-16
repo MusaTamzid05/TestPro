@@ -38,7 +38,7 @@ public class EmployeeManager extends QueryManager {
 					bean = new Employee();
 					
 					bean.setName(rs.getString("name"));
-					bean.setEmail(rs.getString("password"));
+					bean.setEmail(rs.getString("email"));
 					bean.setContact_no(rs.getString("contact_no"));
 					bean.setAge(rs.getInt("age"));
 					bean.setCityName("city_name");

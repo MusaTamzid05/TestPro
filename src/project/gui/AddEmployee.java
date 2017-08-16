@@ -50,15 +50,20 @@ public class AddEmployee extends JFrame
 	private static String varsityName[] = {"Select One", "AIUB", "BRAC", "BUET", "DU", "DIU", "EWU", "IUB", "NSU", "UIU"};
 	private static String age2[] = {"Select One", "25", "26", "27", "28", "29", "30","31", "32", "33", "34", "35", "36", "37","38", "39", "40", "41", "42", "43", "44","45", "46", "47", "48", "49", "50"};
 	
+	private String addEditButtonName;
 	
+	private Employee employee;
 
 	EventHandler eh = new EventHandler(this);
 	
 	private boolean isRoot;
 	
-	public AddEmployee(boolean isRoot)
+	public AddEmployee(boolean isRoot , Employee employee)
 	{
-		super("Add Employee");
+		super("Employee Data");
+		
+		this.employee = employee;
+		
 		setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(750, 850);
@@ -85,7 +90,11 @@ public class AddEmployee extends JFrame
 		cityLabel = createLabel("City Name", 220, 425, 0, 0);
 		varsityLabel = createLabel("Univarsity Name", 0, 495, 0, 0);
 		
-	
+		ArrayList<String> names = UniversityLinkManager.getUniversityNames();
+		univarsityBox = new JComboBox();
+		
+		for(String name : names) 
+			univarsityBox.addItem(name);
 		
 		nameFld = createTextField(100, 230);
 		
@@ -98,6 +107,7 @@ public class AddEmployee extends JFrame
 		ageBox.addActionListener(eh);
 		add(ageBox);
 		
+		
 		cityBox = new JComboBox(cityName);
 		cityBox.setSelectedIndex(0);
 		cityBox.setBounds(posX+300, posY+430, cmbBoxWidth, cmbBoxHeight);
@@ -108,17 +118,38 @@ public class AddEmployee extends JFrame
 		
 		
 		
-		ArrayList<String> names = UniversityLinkManager.getUniversityNames();
-		
-		univarsityBox = new JComboBox();
-		
-		for(String name : names) 
-			univarsityBox.addItem(name);
+	
 		
 		univarsityBox.setSelectedIndex(0);
 		univarsityBox.setBounds(posX+100, posY+500, cmbBoxWidth + 200, cmbBoxHeight);
 		univarsityBox.addActionListener(eh);
 		add(univarsityBox);
+		
+		
+	
+		if(employee != null) {
+			
+			// for updating employee.
+			
+			String temp = String.valueOf((employee.getAge()));
+			ageBox.setSelectedItem(temp);
+			cityBox.setSelectedItem(employee.getCityName());
+			univarsityBox.setSelectedItem(employee.getUniversity_name());
+			
+			nameFld.setText(employee.getName());
+			emailFld.setText(employee.getEmail());
+			contactFld.setText(employee.getContact_no());
+			imageLabel.setIcon(Helper.ResizeImage(employee.getImagePath() , imageLabel));
+			
+			addEditButtonName = "Edit Employee";
+			addButton = createButton(addEditButtonName,100, 640);
+			
+			
+		}else {
+			addEditButtonName = "Add Employee";
+			addButton = createButton(addEditButtonName,100, 640);
+		}
+		
 		
 		browseButton = createButton("Browse Image", 0, 100);
 	
@@ -156,16 +187,24 @@ public class AddEmployee extends JFrame
 		return button;
 	}
 	
-	/*
-	public ImageIcon ResizeImage(String ImagePath)
-    {
-        ImageIcon MyImage = new ImageIcon(ImagePath);
-        Image img = MyImage.getImage();
-        Image newImg = img.getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon image = new ImageIcon(newImg);
-        return image;
-    }
-    */
+	
+	
+	private boolean dataBaseOperation(Employee employeeData) {
+		
+		// if the user wants to create a employee.
+		if(employee == null) {
+			
+			if(EmployeeManager.insert(employeeData))
+			     return true;
+			
+			return false;
+			
+		}
+		
+		// here user is updating the employee record
+	
+		return false;
+	}
 	
 	
 	private void setUniversityData() {
@@ -197,7 +236,7 @@ public class AddEmployee extends JFrame
 	}
 	
 	
-	private void saveResult() {
+	protected void saveResult() {
 		
 		if(sscExamInfo != null) {
 			
@@ -206,6 +245,16 @@ public class AddEmployee extends JFrame
 		if(hscExamInfo != null) {
 			
 		}
+		
+		// User is creating new employee
+		
+		if(employee == null) {
+			
+			
+			return;
+		}
+		
+		// here user is updating the employee.
 	}
 	
 	
@@ -303,10 +352,9 @@ public class AddEmployee extends JFrame
 		employee.setUniversityName(univarsityBox.getSelectedItem().toString());
 		
 		
+		if(dataBaseOperation(employee))
+			return true;
 		
-		
-		if(EmployeeManager.insert(employee))
-		     return true;
 
 		
 		return false;
@@ -350,14 +398,18 @@ public class AddEmployee extends JFrame
 		{
 			String check = event.getActionCommand();
 			
-			if(check.equals("Add Employee"))
+			if(check.equals(addEditButtonName))
 			{
-				if(saveToDataBase()) {
+				if(saveToDataBase()) 
 					JOptionPane.showMessageDialog(null, "Data Inserted.");
-					addEmployee.dispose();
-					new MainMenu(isRoot);
+				else
+					JOptionPane.showMessageDialog(null, "Data Insertion failed.");
 					
-				}
+					
+				
+				
+				addEmployee.dispose();
+				new MainMenu(isRoot);
 				
 			}else if(check.equals("Browse Image")) {
 				setImagePath();
