@@ -11,9 +11,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import project.crawler.WikiScraper;
 import project.database.DataBaseConnector;
 import project.database.manager.EmployeeManager;
+import project.database.manager.ExamInfoManager;
 import project.database.manager.UniversityInfoManager;
 import project.database.manager.UniversityLinkManager;
 import project.database.tables.Employee;
+import project.database.tables.ExamInfo;
 import project.database.tables.UniversityInfo;
 import project.database.tables.UniversityLink;
 import project.util.Helper;
@@ -64,11 +66,12 @@ public class AddEmployee extends JFrame
 		
 		this.employee = employee;
 		
-		setLayout(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(750, 850);
 		//getContentPane().setBackground(Color.LIGHT_GRAY);
 		setContentPane(new JLabel(new ImageIcon("C:\\Users\\USER\\Desktop\\Musa\\Java Project\\src\\back.jpg")));
+		this.setLayout(null);
 		setVisible(true);
 		
 		infoMsgLabel = createLabel("Enter Employees Information", 120, -10, 200, 0);
@@ -116,7 +119,7 @@ public class AddEmployee extends JFrame
 		
 		imageErrorLabel = createLabel("", 0, 10, 0, 0);
 		
-		
+	
 		
 	
 		
@@ -132,7 +135,7 @@ public class AddEmployee extends JFrame
 			// for updating employee.
 			
 			
-			
+			System.out.println("We are updating employee.");
 			String temp = String.valueOf((employee.getAge()));
 			ageBox.setSelectedItem(temp);
 			cityBox.setSelectedItem(employee.getCityName());
@@ -149,6 +152,8 @@ public class AddEmployee extends JFrame
 			
 			
 		}else {
+			
+			System.out.println("We are adding employee.");
 			addEditButtonName = "Add Employee";
 			addButton = createButton(addEditButtonName,100, 640);
 		}
@@ -192,12 +197,13 @@ public class AddEmployee extends JFrame
 	
 	
 	
-	private boolean dataBaseOperation(Employee employeeData) {
+	private boolean dataBaseOperation(String operation) {
 		
 		// if the user wants to create a employee.
-		if(employee == null) {
+		if(operation == "insert") {
 			
-			if(EmployeeManager.insert(employeeData))
+			System.out.println("This is a insert operation.");
+			if(EmployeeManager.insert(employee))
 			     return true;
 			
 			return false;
@@ -206,8 +212,8 @@ public class AddEmployee extends JFrame
 		
 		// here user is updating the employee record
 		
-		System.out.println("Trying to update employee data.");
-		if(EmployeeManager.update(employeeData))
+		System.out.println("This is an update operation.");
+		if(EmployeeManager.update(employee))
 			return true;
 	
 		return false;
@@ -243,60 +249,86 @@ public class AddEmployee extends JFrame
 	}
 	
 	
-	protected void saveResult() {
+	protected void saveResult(String operation) {
+		
+		ExamInfo examInfo = null;
+		
+		int id;
+		
+		if(employee == null) 
+			id = EmployeeManager.getLastID();
+		else 
+			id = employee.getId();
+		
+			
+
+		
+		String year = "";
+		String roll = "";
+		String board = "";
+		String reg = "";
+		
+		
+		
 		
 		if(sscExamInfo != null) {
+			
+			year = sscExamInfo.getYear();
+			roll = sscExamInfo.getRoll();
+			board = sscExamInfo.getBoard();
+			reg = sscExamInfo.getReg();
+			
+			examInfo  =  new ExamInfo("ssc" , id ,
+					year , board , roll , reg );
+			
+			if(operation == "insert") {
+				if(!ExamInfoManager.insert(examInfo))
+					JOptionPane.showMessageDialog(null, "SSC data could not be inserted");
+						
+			}else if (operation == "update")
+				if(!ExamInfoManager.update(examInfo))
+					JOptionPane.showMessageDialog(null, "ssc data could not be inserted");
+		
+
 			
 		}
 		
 		if(hscExamInfo != null) {
 			
+			year= hscExamInfo.getYear();
+			roll = hscExamInfo.getRoll();
+			board = hscExamInfo.getBoard();
+			reg  = hscExamInfo.getReg();
+			
+			examInfo  =  new ExamInfo("hsc" , id ,
+					year , board , roll , reg );
+			
+		
+			
+			if(operation == "insert") {
+				if(!ExamInfoManager.insert(examInfo))
+					JOptionPane.showMessageDialog(null, "SSC data could not be inserted");
+						
+			}else if (operation == "update")
+				if(!ExamInfoManager.update(examInfo))
+					JOptionPane.showMessageDialog(null, "SSCh data could not be inserted");
+			
 		}
 		
-		// User is creating new employee
 		
-		if(employee == null) {
-			
-			
-			return;
-		}
 		
-		// here user is updating the employee.
+		
 	}
 	
 	
 	private boolean saveToDataBase() {
 		
 		
+		
+		
 	    boolean allDataValidated = true;
 		
-		String sscYear = "";
-		String sscRoll = "";
-		String sscBoard = "";
-		String sscReg = "";
-		
-		String hscYear = "";
-		String hscRoll = "";
-		String hscBoard = "";
-		String  hscReg = "";
-		
-		
-		if(sscExamInfo != null) {
-			
-			sscYear = sscExamInfo.getYear();
-			sscRoll = sscExamInfo.getRoll();
-			sscBoard = sscExamInfo.getBoard();
-			sscReg = sscExamInfo.getRegistration();
-			
-		}
-		
-		if(hscExamInfo != null) {
-			
-			hscYear = hscExamInfo.getYear();
-			hscRoll = hscExamInfo.getRoll();
-			hscBoard = hscExamInfo.getBoard();
-			hscReg = hscExamInfo.getRegistration();
-		}
+	
 		
 		String name = nameFld.getText();
 		String email = emailFld.getText();
@@ -353,15 +385,13 @@ public class AddEmployee extends JFrame
 		if(!allDataValidated)
 			return false;
 		
-		
-		
-		
-		
-		saveResult();
 		setUniversityData();
+		
+		String operation = "";
 		
 		if(employee == null) {
 			
+			operation = "insert";
 			employee = new Employee();
 			employee.setName(name);
 			employee.setAge(Integer.parseInt(age));
@@ -373,7 +403,7 @@ public class AddEmployee extends JFrame
 				
 		}else {
 			
-			
+			operation = "update";
 			employee.setName(nameFld.getText());
 			employee.setAge(Integer.parseInt(ageBox.getSelectedItem().toString()));
 			employee.setContact_no(contactFld.getText());
@@ -385,11 +415,13 @@ public class AddEmployee extends JFrame
 		
 		
 		
-		if(dataBaseOperation(employee))
+		if(dataBaseOperation(operation)) {
+			
+			saveResult(operation);
 			return true;
-		
-
-		
+			
+		}
+			
 		return false;
 		
 	}

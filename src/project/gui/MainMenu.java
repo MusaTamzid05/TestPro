@@ -28,7 +28,7 @@ public class MainMenu extends JFrame
 
 	public MainMenu(boolean isRoot)
 	{
-		super("Show Employees");
+		super("Menu");
 		this.isRoot = isRoot;
 		//setLayout(null);
 		setLayout(new FlowLayout());
@@ -95,7 +95,7 @@ public class MainMenu extends JFrame
 			if(check.equals("Admin Settings"))
 			{
 				menu.dispose();
-				//new AdminSettings();
+				new AdminSettings();
 				
 			}
 			else if(check.equals("Add Employee"))

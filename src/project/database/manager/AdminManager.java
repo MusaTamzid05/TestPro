@@ -279,7 +279,7 @@ public class AdminManager extends QueryManager {
 	public static ArrayList<Admin> getAll(){
 			
 			ArrayList<Admin> admins = new ArrayList<>();
-			String sql = getAllQuery();
+			String sql = "SELECT * FROM admin";
 			
 			PreparedStatement stmt = getPrepareStatement(sql , false);
 			
@@ -301,6 +301,7 @@ public class AdminManager extends QueryManager {
 				}
 				
 			}catch(SQLException e) {
+				System.err.println(e.getMessage());
 				
 			}finally {
 				

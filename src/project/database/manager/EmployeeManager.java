@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import project.database.tables.Admin;
 import project.database.tables.Employee;
+import project.database.tables.ExamInfo;
 
 
 public class EmployeeManager extends QueryManager {
@@ -237,6 +238,49 @@ public class EmployeeManager extends QueryManager {
 	
 		return isUpdated;
 		
+	}
+	
+public static int getLastID() {
+		
+		ExamInfo bean =  null;
+		String tableName = null;
+		
+		int maxID = -1;
+		
+		String sql = "SELECT * FROM  exam_info WHERE employee_id  = (SELECT MAX(employee_id)";
+		PreparedStatement stmt = getPrepareStatement(sql , false);
+		
+		
+		if(stmt == null)
+			return maxID;
+		
+		ResultSet rs = null;
+		
+		try {
+			
+			
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) 
+				maxID = rs.getInt("employee_id");
+			
+				
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			
+		}finally {
+			if(rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		
+		
+		
+		return maxID;
 	}
 	
 	public static void main(String[] argv) {

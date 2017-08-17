@@ -2,6 +2,9 @@ package project.gui;
 
 
 import javax.swing.*;
+
+import project.database.tables.ExamInfo;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -128,7 +131,7 @@ public class SscHscInfo extends JFrame
 				
 				examInfo.setBoard(boardBox.getSelectedItem().toString());
 				examInfo.setYear(yearBox.getSelectedItem().toString());
-				examInfo.setRegistration(regFld.getText());
+				examInfo.setReg(regFld.getText());
 				examInfo.setRoll(rollFld.getText());
 				
 				

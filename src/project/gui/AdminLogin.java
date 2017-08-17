@@ -41,6 +41,8 @@ public class AdminLogin extends JFrame
 		//adminLogin.setBackground(Color.white);
 		adminLogin.setForeground(Color.red);
 		add(adminLogin);
+		
+		this.setLayout(null);
 	}
 	
 	private class EventHandler implements ActionListener

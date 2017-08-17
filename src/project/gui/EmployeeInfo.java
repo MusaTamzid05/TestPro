@@ -1,6 +1,6 @@
 package project.gui;
 import java.awt.Color;
-
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -57,8 +57,8 @@ public class EmployeeInfo extends JFrame
 		
 		this.isRoot =isRoot;
 		this.employee = employee;
-		setLayout(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(null);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(640, 480);
 		//getContentPane().setBackground(Color.LIGHT_GRAY);
 		//setContentPane(new JLabel(new ImageIcon("C:\\Users\\USER\\Desktop\\Musa\\Java Project\\src\\back.jpg")));
@@ -93,6 +93,8 @@ public class EmployeeInfo extends JFrame
 		
 		
 		setVisible(true);
+		
+		
 		
 		
 	}
@@ -170,7 +172,7 @@ public class EmployeeInfo extends JFrame
 				System.out.println("Choice : " + choice);
 				
 				if(choice == 0) {
-					if(EmployeeManager.delete(Defines.employeeTable , "id" , ei.employee.getId())) {
+					if(EmployeeManager.delete(Defines.EMPLOYEE_TABLE , "id" , ei.employee.getId())) {
 						JOptionPane.showMessageDialog(null, "Data deleted");
 						ei.dispose();
 						new MainMenu(isRoot);

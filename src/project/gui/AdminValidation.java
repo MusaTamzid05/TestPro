@@ -29,7 +29,7 @@ public class AdminValidation extends JFrame
 	public AdminValidation()
 	{
 		super("Admin Validation");
-		setLayout(null);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600, 400);
 		//getContentPane().setBackground(Color.LIGHT_GRAY);
@@ -50,6 +50,8 @@ public class AdminValidation extends JFrame
 		logIn.addActionListener(eh);
 		logIn.setForeground(Color.red);
 		add(logIn);
+		
+		this.setLayout(null);
 	}
 	
 	private JLabel createLabel(String title, int posXchange, int posYchange)
