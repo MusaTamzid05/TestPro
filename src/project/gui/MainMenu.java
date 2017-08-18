@@ -15,7 +15,7 @@ public class MainMenu extends JFrame
 {
 	int posX = 10, posY = 10;
 	int buttonWidth = 140, buttonHeight = 20;
-	private JButton addEmpButton, removeEmpButton, logOutButton, adminSettingsButton;
+	private JButton addEmpButton,  logOutButton, adminSettingsButton;
 	private JList list;
 	
 	ArrayList<Employee> employees;
@@ -44,7 +44,7 @@ public class MainMenu extends JFrame
 
 		
 		addEmpButton = createButton("Add Employee", 0, 0);
-		removeEmpButton = createButton("Remove Employee", 150, 0);
+		
 		logOutButton = createButton("Log Out", 300, 0);
 		
 		

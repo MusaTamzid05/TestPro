@@ -11,7 +11,11 @@ import javax.swing.*;
 import project.Defines;
 import project.database.DataBaseConnector;
 import project.database.manager.EmployeeManager;
+import project.database.manager.UniversityInfoManager;
+import project.database.manager.UniversityLinkManager;
 import project.database.tables.Employee;
+import project.database.tables.UniversityInfo;
+import project.database.tables.UniversityLink;
 import project.util.Helper;
 
 public class EmployeeInfo extends JFrame
@@ -137,7 +141,39 @@ public class EmployeeInfo extends JFrame
 		}
 		
 		imageLabel.setIcon(Helper.ResizeImage(path , imageLabel));
+				
+	
+	}
+	
+	private void showUniversityData() {
+		
+		
+		String universityName = employee.getUniversity_name();
+		UniversityLink uniLink = UniversityLinkManager.SearchByName(universityName);
+		int id = uniLink.getId();
+		UniversityInfo info = UniversityInfoManager.searchByID(id);
+		
+		if(info != null) {
 			
+			new UnInfoPage(universityName, 
+					info.getOther_students(), 
+					info.getCampus(), 
+					info.getUndergraduates(), 
+					info.getPostgraduates(),
+					info.getDoctralStudents(), 
+					info.getWebsites(), 
+					info.getMotto(), 
+					info.getAcadamicStuff(), 
+					info.getType(), info.getAdminStuffs(), 
+					info.getStudents(), 
+					info.getViseChans(), 
+					info.getEstablished(), 
+					info.getLocation());
+			
+		}else
+			JOptionPane.showMessageDialog(null, "University data is not available");
+			
+		
 		
 	
 	}
@@ -182,7 +218,7 @@ public class EmployeeInfo extends JFrame
 				}
 			
 			}else if(check.equals(universityButtonName)){
-				
+				showUniversityData();
 			
 			}
 			else if(check.equals(sscButtonName)){
