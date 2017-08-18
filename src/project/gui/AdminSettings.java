@@ -1,6 +1,10 @@
 package project.gui;
 import javax.swing.*;
 import javax.swing.event.*;
+
+import project.database.manager.AdminManager;
+import project.database.tables.Admin;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -10,7 +14,7 @@ public class AdminSettings extends JFrame
 	int posX = 10, posY = 10;
 	int buttonWidth = 140, buttonHeight = 20;
 
-	private static String employeeName[] = {
+	private static String employeeNames[] = {
 			"Musa", "Linkon", "Salman",
 			"Ripon", "Zahid", "Maisha",
 			"Mushfiq", "Faysal", "Shakib"};
@@ -20,6 +24,8 @@ public class AdminSettings extends JFrame
 	private JList list;
 
 	EventHandler eh = new EventHandler(this);
+	
+	ArrayList<Admin> admins;
 
 	public AdminSettings() {
 
@@ -40,8 +46,14 @@ public class AdminSettings extends JFrame
 
 		addAdminButton = createButton("Add Admin", 0);
 		backButton = createButton("Back", 80);
+		
+		admins = AdminManager.getAll();
+		employeeNames = new String[admins.size()];
+		
+		for(int i = 0 ; i < admins.size(); i++)
+			employeeNames[i] = admins.get(i).getUserName();
 
-		list = new JList(employeeName);
+		list = new JList(employeeNames);
 		list.setPreferredSize(new Dimension(200, 100));
 		list.setVisibleRowCount(5);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -73,23 +85,24 @@ public class AdminSettings extends JFrame
 
 			String check = event.getActionCommand();
 			if(check.equals("Add Admin")) {
-
-				//as.dispose();
+			
+				as.dispose();
+				new EditAdmin(null);
 			}
 
 			else if(check.equals("Back")) {
 
-				//as.dispose();
+				as.dispose();
+				new MainMenu(true);
 			}
 		}
 
 		@Override
 		public void valueChanged(ListSelectionEvent event) {
 
-			if(list.getSelectedIndex()==0) {
-
-				//as.dispose();
-			}
+			Admin admin = admins.get(list.getSelectedIndex());
+			as.dispose();
+			new ShowAdmin(admin);
 		}
 	}
 }

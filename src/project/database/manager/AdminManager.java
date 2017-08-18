@@ -139,7 +139,7 @@ public class AdminManager extends QueryManager {
 		
 		boolean dataInserted = false;
 		
-		String sql = getInsertQuery();
+		String sql = "INSERT INTO admin ( userName, password) VALUES ( ? ,?)";
 		ResultSet key = null;
 		
 		
@@ -199,9 +199,9 @@ public class AdminManager extends QueryManager {
 		
 		
 		boolean dataUpdated = false;
-		initTable();
+	
 		
-		String sql = getUpdateQuery();
+		String sql = "UPDATE admin SET  userName = ? ,password = ?  WHERE id = ? ";
 		System.out.println(sql);
 		
 		try {
@@ -218,12 +218,15 @@ public class AdminManager extends QueryManager {
 			
 			int affected = stmt.executeUpdate();
 			
+			System.out.println("Total row updated " + affected);
+			
 			if(affected == 1)
 				dataUpdated = true;
 			
 			
 			
-		}catch(SQLException stmt) {
+		}catch(SQLException e) {
+			System.err.println(e.getMessage());
 			
 		}
 		
@@ -231,49 +234,7 @@ public class AdminManager extends QueryManager {
 		
 	}
 	
-	public static boolean delete(int id) {
-		
-		boolean dataDeleted = false;
-		
-		Admin admin = AdminManager.getRow(id);
-		
-		if(admin == null) {
-			System.out.println("Admin with id " + id + " does not exists");
-			return dataDeleted;
-		}
-		
-		String sql = getDeleteQuery();
-		PreparedStatement stmt = getPrepareStatement(sql , false);
-		System.out.println(sql);
-		
-		if(stmt == null) {
-			System.out.println("The delete statement from Admin could not been created.");
-			return dataDeleted;
-		}
-		
-		System.out.println("Delete statement created.");
-		
-		try {
-			stmt.setInt(1 , id);
-			
-			int affected = stmt.executeUpdate();
-			
-			if(affected == 1)
-				dataDeleted = true;
-			else
-				dataDeleted = false;
-			
-			
-		} catch (SQLException e) {
-			
-			System.err.println(e.getMessage());
-		
-		}
-		
-		
-		
-		return dataDeleted;
-	}
+	
 	
 	
 	public static ArrayList<Admin> getAll(){
@@ -320,5 +281,53 @@ public class AdminManager extends QueryManager {
 		
 			return admins;
 		}
+	
+	public static  boolean nameExists(String userName){
+			
+			
+			
+			boolean exists = false;
+			
+			String sql = "SELECT * FROM admin WHERE userName = ?";
+			
+			PreparedStatement stmt = getPrepareStatement(sql , false);
+			
+			
+			if(stmt == null)
+				return false;
+			
+			ResultSet rs = null;
+			
+			try {
+				stmt.setString(1, userName);
+				rs = stmt.executeQuery();
+				
+				if(rs.next())
+					exists = true;
+				
+				
+				
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+				
+				
+			}finally {
+				if(rs != null)
+					try {
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+			
+			
+			return exists;
+				
+			
+			
+		}
+	
 
 }
