@@ -110,7 +110,7 @@ public class ShowAdmin extends JFrame
 				}	//sa.dispose();
 			}else if(check.equals("Back")) {
 				sa.dispose();
-				new MainMenu(true);
+				new AdminSettings();
 			}
 		}
 	}

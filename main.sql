@@ -35,7 +35,9 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `contact_no` varchar(50) NOT NULL,
   `age` int(11) NOT NULL,
   `university_name` varchar(100) NOT NULL ,
-   `city_name` varchar(100) NOT NULL ,
+  `city_name` varchar(100) NOT NULL ,
+  `image_path` varchar(100) NOT NULL ,
+  
 
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=2 ;
@@ -55,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `exam_info` (
 ) AUTO_INCREMENT=2 ;
 
 
-CREATE TABLE IF NOT EXISTS `university_link` (
+CREATE TABLE IF NOT EXISTS `university_links` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `link` varchar(50) NOT NULL,
@@ -63,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `university_link` (
 ) AUTO_INCREMENT=2 ;
 
 
-CREATE TABLE IF NOT EXISTS `university_info` (
+CREATE TABLE IF NOT EXISTS `uni_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `Other_students` varchar(255) ,
   `Campus` varchar(255) ,

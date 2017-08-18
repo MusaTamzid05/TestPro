@@ -126,7 +126,7 @@ public class ExamInfoManager extends QueryManager {
 		
 	}
 	
-public static  boolean  update(ExamInfo info) {
+	public static  boolean  update(ExamInfo info) {
 		
 		
 		boolean dataUpdated = false;

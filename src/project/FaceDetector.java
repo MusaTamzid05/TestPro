@@ -227,7 +227,7 @@ public class FaceDetector {
 	public static void main(String[] argv) {
 		
 		
-		int count = FaceDetector.getFaceCount("/home/musa/test6.jpg");
+		int count = FaceDetector.getFaceCount("/home/musa/test3.jpg");
 		
 		System.out.println("total face count " + count);
 	}

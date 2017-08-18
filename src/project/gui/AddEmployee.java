@@ -249,7 +249,31 @@ public class AddEmployee extends JFrame
 	}
 	
 	
-	protected void saveResult(String operation) {
+	private void saveResultData(String examName , int id , String operation , ExamInfo examInfo) {
+		
+		if(operation == "insert") {
+			if(!ExamInfoManager.insert(examInfo))
+				JOptionPane.showMessageDialog(null, examName + " data could not be inserted");
+					
+		}else if (operation == "update") {
+			
+			// if the data exists , only than will the data update.
+			
+			ExamInfo  temp = ExamInfoManager.getExamInfoOf(examName, id);
+			
+			if(temp == null) {
+				if(!ExamInfoManager.insert(examInfo))
+					JOptionPane.showMessageDialog(null,  examName + " data  not be updated");
+			}else {
+				if(!ExamInfoManager.update(examInfo))
+					JOptionPane.showMessageDialog(null, examName + " data could not be updated");
+				
+			}
+		}
+		
+	}
+	
+	private void saveResult(String operation) {
 		
 		ExamInfo examInfo = null;
 		
@@ -281,15 +305,8 @@ public class AddEmployee extends JFrame
 			examInfo  =  new ExamInfo("ssc" , id ,
 					year , board , roll , reg );
 			
-			if(operation == "insert") {
-				if(!ExamInfoManager.insert(examInfo))
-					JOptionPane.showMessageDialog(null, "SSC data could not be inserted");
-						
-			}else if (operation == "update")
-				if(!ExamInfoManager.update(examInfo))
-					JOptionPane.showMessageDialog(null, "ssc data could not be inserted");
+			saveResultData("ssc" ,id , operation , examInfo);
 		
-
 			
 		}
 		
@@ -303,21 +320,10 @@ public class AddEmployee extends JFrame
 			examInfo  =  new ExamInfo("hsc" , id ,
 					year , board , roll , reg );
 			
-		
+			saveResultData("hsc" ,id , operation , examInfo);
 			
-			if(operation == "insert") {
-				if(!ExamInfoManager.insert(examInfo))
-					JOptionPane.showMessageDialog(null, "SSC data could not be inserted");
-						
-			}else if (operation == "update")
-				if(!ExamInfoManager.update(examInfo))
-					JOptionPane.showMessageDialog(null, "SSCh data could not be inserted");
-			
-		}
-		
-		
-		
-		
+			}
+				
 	}
 	
 	
