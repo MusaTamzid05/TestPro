@@ -11,13 +11,16 @@ import javax.swing.*;
 import project.Defines;
 import project.database.DataBaseConnector;
 import project.database.manager.EmployeeManager;
+import project.database.manager.ExamInfoManager;
 import project.database.manager.UniversityInfoManager;
 import project.database.manager.UniversityLinkManager;
 import project.database.tables.Employee;
+import project.database.tables.ExamInfo;
 import project.database.tables.UniversityInfo;
 import project.database.tables.UniversityLink;
 import project.util.Helper;
 
+import project.examresults.ResultHelper;
 public class EmployeeInfo extends JFrame
 {
 	int posX = 50, posY = 20, labelWidth = 300, labelHeight = 50;
@@ -97,10 +100,7 @@ public class EmployeeInfo extends JFrame
 		
 		
 		setVisible(true);
-		
-		
-		
-		
+	
 	}
 	
 	private JLabel createLabel(String title, int posXchange, int posYchange)
@@ -172,10 +172,24 @@ public class EmployeeInfo extends JFrame
 			
 		}else
 			JOptionPane.showMessageDialog(null, "University data is not available");
+	}
+	
+	private void showExamInfo(String examName ) {
+		
+		ExamInfo examInfo = ExamInfoManager.getExamInfoOf(examName,  employee.getId());
+		
+		if(examInfo == null) {
+			
+			JOptionPane.showMessageDialog(null, examName + " info for " + employee.getName() + " is not available.");
+			return;
+		}
+			
+		ResultHelper.showResultPage(examName, examInfo.getYear() ,
+				examInfo.getBoard() , examInfo.getRoll() , examInfo.getReg()); 
+		
 			
 		
 		
-	
 	}
 	
 	private class EventHandler implements ActionListener
@@ -222,11 +236,10 @@ public class EmployeeInfo extends JFrame
 			
 			}
 			else if(check.equals(sscButtonName)){
-				
+				showExamInfo("ssc");
 				
 			}else if(check.equals(hscButtonName)){
-				
-			
+				showExamInfo("hsc");
 			}
 		}
 	}

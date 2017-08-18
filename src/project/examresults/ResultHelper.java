@@ -21,10 +21,10 @@ public class ResultHelper {
 		
 	}
 	
-	private static void  fillText(WebDriver driver , String id , String roll) throws Exception {
+	private static void  fillText(WebDriver driver , String id , String value) throws Exception {
 		
 		WebElement element = driver.findElement(By.id(id));
-		element.sendKeys(roll);
+		element.sendKeys(value);
 		
 		
 	}
@@ -35,7 +35,7 @@ public class ResultHelper {
 	
 
 	
-	public static void showResultPage(String examName, String year , String board) {
+	public static void showResultPage(String examName, String year , String board , String roll , String reg)  {
 		
 		 WebDriver driver = new FirefoxDriver();
 		 
@@ -46,12 +46,17 @@ public class ResultHelper {
 			
 			
 			 
+			 if(examName == "ssc")
+				 examName =  "SSC/Dakhil";
+			 else if(examName == "hsc")
+				 examName = "HSC/Alim";
 			 
-			selectDropDown(driver , "exam" , "SSC(Vocational)");
+			 
+			selectDropDown(driver , "exam" , examName);
 			selectDropDown(driver , "year" , year);
 			selectDropDown(driver , "board" , board);
-			fillText(driver , "roll" , "123");
-			fillText(driver , "reg" , "123");
+			fillText(driver , "roll" , roll);
+			fillText(driver , "reg" , reg);
 			int solve =CapshaSolver.solve(html); 
 			fillText(driver , "value_s" , String.valueOf(solve));
 			
@@ -71,7 +76,7 @@ public class ResultHelper {
 	
 	public static void main(String[] argv) {
 		
-		showResultPage("SSC(Vocational)" , "2011" , "Dhaka");
+		showResultPage("SSC(Vocational)" , "2011" , "Dhaka" , "222" , "333");
 	}
 
 }
