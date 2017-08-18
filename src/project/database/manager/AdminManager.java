@@ -19,20 +19,7 @@ public class AdminManager extends QueryManager {
 		
 		
 	}
-	private static void initTable() {
-		
-		if(tableLoaded)
-			return;
-		
-		tableName = "admin";
-		dataName = new ArrayList<String>();
-		
-		dataName.add("userName");
-		dataName.add("password");
-		
-		tableLoaded = true;
-		
-	}
+	
 	
 	public static boolean isLoggedInSucessfull(String userName , String password) {
 		
@@ -80,7 +67,7 @@ public class AdminManager extends QueryManager {
 	}
 	
 	
-	
+	/*
 	public static Admin getRow(int id) {
 		
 		initTable();
@@ -106,10 +93,8 @@ public class AdminManager extends QueryManager {
 				bean.setId(id);
 				bean.setUserName(rs.getString("userName"));
 				bean.setPassword(rs.getString("password"));
-				
-			}
-			
-			
+		
+			}			
 			
 		} catch (SQLException e) {
 			
@@ -131,11 +116,11 @@ public class AdminManager extends QueryManager {
 			
 		
 		
-	}
+	}*/
 	
 	public static boolean insert(Admin admin) {
 		
-		initTable();
+		//initTable();
 		
 		boolean dataInserted = false;
 		

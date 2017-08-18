@@ -13,96 +13,10 @@ import project.database.DataBaseConnector;
 public class QueryManager {
 	
 	
-	protected static ArrayList<String> dataName;
-	protected static String tableName;
-	
-	
-	protected static void  initTableData() {
-		
-		
-	}
-
-	protected static String getInsertQuery() {
-		
-		String sql = "INSERT INTO "+ tableName + " (";
-		
-		int index = 0;
-		
-		for(String name : dataName) {
-			sql += name;
-			sql+= " ";
-			
-			if(index != dataName.size() - 1)
-				sql += " , ";
-			
-			index+=1;
-			
-		}
-		
-		sql+= ") VALUES(";
-		
-		for(int i = 0 ; i < dataName.size(); i++) {
-			sql += "?";
-			
-			if(i != dataName.size() - 1)
-				sql+=",";
-		}
-		
-		sql += ");";
-			
-		return sql;
-	}
-	
-	protected static String getUpdateQuery() {
-		
-	
-		
-		String sql = "UPDATE " + tableName + " SET ";
-		
-		int index = 0;
-		
-		for(String data : dataName) {
-			
-			sql+= data + " = ?";
-			
-			if(index != dataName.size() - 1)
-				sql += ",";
-			
-			index+= 1;
-			
-		}
-		
-		sql+= " WHERE id = ?";
-		
-		return sql;
-	}
-	
-	protected static String getRowQuery() {
-		
-		String sql = "SELECT * FROM " + tableName + " WHERE id = ?";
-		return sql;
-	}
-	
-	protected static String getAllQuery() {
-		
-		String sql = "SELECT * FROM " + tableName + ";";
-		return sql;
-	}
-	
-	
-	protected static String getDeleteQuery() {
-		
-		
-		
-		return "DELETE FROM "+ tableName + " WHERE id = ?" ;
-	}
-	
 	static public boolean delete(String tableName , String keyName , int id) {
 		
-		initTableData();
+		
 		boolean dataDeleted = false;
-		
-		
 		
 		String sql = "DELETE FROM " + tableName + " WHERE " + keyName + " = ?";
 		

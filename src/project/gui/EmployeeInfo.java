@@ -224,6 +224,9 @@ public class EmployeeInfo extends JFrame
 				if(choice == 0) {
 					if(EmployeeManager.delete(Defines.EMPLOYEE_TABLE , "id" , ei.employee.getId())) {
 						JOptionPane.showMessageDialog(null, "Data deleted");
+						
+						// delete the exam data
+						ExamInfoManager.delete(Defines.EXAM_INFO_TABLE, "employee_id", ei.employee.getId());
 						ei.dispose();
 						new MainMenu(isRoot);
 					}else
